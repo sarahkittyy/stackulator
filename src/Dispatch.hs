@@ -25,8 +25,8 @@ dispatch input stack =
 -- | Applies the operator to the given stack
 applyOperator :: Value -> [Value] -> Either String [Value]
 applyOperator (Operator '+') ((Number a):(Number b):rest) = Right $ (Number $ a + b):rest
-applyOperator (Operator '-') ((Number a):(Number b):rest) = Right $ (Number $ a - b):rest
+applyOperator (Operator '-') ((Number a):(Number b):rest) = Right $ (Number $ b - a):rest
 applyOperator (Operator '*') ((Number a):(Number b):rest) = Right $ (Number $ a * b):rest
-applyOperator (Operator '/') ((Number a):(Number b):rest) = Right $ (Number $ a / b):rest
+applyOperator (Operator '/') ((Number a):(Number b):rest) = Right $ (Number $ b / a):rest
 applyOperator (Operator x) _ = Left $ "Error, cannot apply binary operator " ++ [x] ++ "."
 applyOperator _ _ = error "This shouldn't appear? ;-;"
