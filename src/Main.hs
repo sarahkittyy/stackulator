@@ -1,8 +1,8 @@
 module Main where
     
 import Stack
-import Values
-import Stackulator
+import Value
+import Dispatch
 import System.IO
 
 main :: IO ()
@@ -21,11 +21,9 @@ env stack = do
     
 onInput :: [Value] -> String -> (String, [Value])
 onInput stack "" = ("You must input something!", stack)
-onInput stack str = 
-    let value = fromInput str
+onInput stack str =
+    let dispatched = dispatch str stack
     in
-        case value of
-            Nothing -> ("Invalid input", stack)
-            Just Pop -> ("", popStack stack)
-            Just Evaluate -> ("", reduceStack stack)
-            Just anything_else -> ("", pushStack anything_else stack)
+        case dispatched of
+            (Left msg) -> (msg, stack)
+            (Right nstack) -> ("", nstack)
